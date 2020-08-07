@@ -132,12 +132,42 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
       },
     ));
     list.add(Text("跳个人页", style: TextStyle(fontSize: 12.0)));
+    list.add(Radio<int>(
+      groupValue: _groupValue,
+      value: 6,
+      onChanged: (value) {
+        setState(() {
+          _groupValue = value;
+        });
+      },
+    ));
+    list.add(Text("跳书架", style: TextStyle(fontSize: 12.0)));
+    list.add(Radio<int>(
+      groupValue: _groupValue,
+      value: 7,
+      onChanged: (value) {
+        setState(() {
+          _groupValue = value;
+        });
+      },
+    ));
+    list.add(Text("跳首页", style: TextStyle(fontSize: 12.0)));
+    list.add(Radio<int>(
+      groupValue: _groupValue,
+      value: 8,
+      onChanged: (value) {
+        setState(() {
+          _groupValue = value;
+        });
+      },
+    ));
+    list.add(Text("跳客服", style: TextStyle(fontSize: 12.0)));
     return list;
   }
 
   Widget _buildBookWidget() {
     return Container(
-        height: 165,
+        height: 185,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,53 +186,13 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
                 labelText: "书本名称",
               ),
             ),
-            Container(
-                height: 40,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("直接跳转到阅读器", style: TextStyle(fontSize: 12.0)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Radio<int>(
-                      groupValue: _bookJumpValue,
-                      value: 0,
-                      onChanged: (value) {
-                        setState(() {
-                          _bookJumpValue = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "是",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Radio<int>(
-                      groupValue: _bookJumpValue,
-                      value: 1,
-                      onChanged: (value) {
-                        setState(() {
-                          _bookJumpValue = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "否",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                )),
+            TextField(
+              controller: _chapterIdxController,
+              decoration: InputDecoration(
+                hintText: "从1开始",
+                labelText: "第几章",
+              ),
+            ),
           ],
         ));
   }
@@ -273,7 +263,9 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
         if (_bookNameController.text?.isNotEmpty == true) {
           map["bookName"] = _bookNameController.text;
         }
-        map["jumpReader"] = _bookJumpValue.toString();
+        if (_chapterIdxController.text?.isNotEmpty == true) {
+          map["seq"] = _chapterIdxController.text;
+        }
 
         final uri =
             Uri(scheme: "waireadstoner", host: "book", queryParameters: map);
@@ -305,6 +297,18 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
         break;
       case 5:
         final uri = Uri(scheme: "waireadstoner", host: "personal");
+        json = uri.toString();
+        break;
+      case 6:
+        final uri = Uri(scheme: "waireadstoner", host: "shelf");
+        json = uri.toString();
+        break;
+      case 7:
+        final uri = Uri(scheme: "waireadstoner", host: "store");
+        json = uri.toString();
+        break;
+      case 8:
+        final uri = Uri(scheme: "waireadstoner", host: "customer");
         json = uri.toString();
         break;
       default:
