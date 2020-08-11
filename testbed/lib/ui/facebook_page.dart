@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:testbed/ui/toast.dart';
 
-class AppsflyerPage extends StatefulWidget {
+class FacebookPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AppsflyerPageState();
+  State<StatefulWidget> createState() => _FacebookPageState();
 }
 
-class _AppsflyerPageState extends State<AppsflyerPage> {
+class _FacebookPageState extends State<FacebookPage> {
   String json = "";
 
   var _groupValue = 0;
   var _bookJumpValue = 0;
+
+  final _channelController = TextEditingController();
 
   final _bookIdController = TextEditingController();
   final _bookNameController = TextEditingController();
@@ -23,16 +26,16 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Appsflyer深度链接"),
+        title: Text("Facebook深度链接"),
         actions: [
-          InkWell(
+          Builder(builder: (context) => InkWell(
               onTap: () {
-                _generate();
+                _generate(context);
               },
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Center(child: Text("生成")),
-              )),
+              )),),
         ],
       ),
       body: Container(
@@ -62,6 +65,13 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
                       )
                     ],
                   )),
+                  TextField(
+                controller: _channelController,
+                decoration: InputDecoration(
+                  hintText: "必填, 建议别写中文",
+                  labelText: "渠道",
+                ),
+              ),
               Text("跳转设置"),
               SizedBox(
                 height: 6,
@@ -182,7 +192,7 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
             TextField(
               controller: _bookNameController,
               decoration: InputDecoration(
-                hintText: "名称，非必填",
+                hintText: "名称",
                 labelText: "书本名称",
               ),
             ),
@@ -253,7 +263,12 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
     }
   }
 
-  void _generate() {
+  void _generate(BuildContext context) {
+    if (_channelController.text?.isNotEmpty != true) {
+      showTip(context, "渠道不能为空");
+      return;
+    }
+
     switch (_groupValue) {
       case 0:
         final map = Map<String, dynamic>();
@@ -266,6 +281,7 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
         if (_chapterIdxController.text?.isNotEmpty == true) {
           map["seq"] = _chapterIdxController.text;
         }
+        map["from"] = _channelController.text;
 
         final uri =
             Uri(scheme: "waireadstoner", host: "book", queryParameters: map);
@@ -276,12 +292,12 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
           final uri = Uri(
               scheme: "waireadstoner",
               host: "web",
-              queryParameters: {"url": _jumpUrlController.text});
+              queryParameters: {"url": _jumpUrlController.text, "from": _channelController.text});
           json = uri.toString();
         }
         break;
       case 2:
-        final uri = Uri(scheme: "waireadstoner", host: "revenue");
+        final uri = Uri(scheme: "waireadstoner", host: "revenue", queryParameters: {"from": _channelController.text});
         json = uri.toString();
         break;
       case 4:
@@ -290,25 +306,26 @@ class _AppsflyerPageState extends State<AppsflyerPage> {
           if (_moduleTitleController.text?.isNotEmpty == true) {
             map["title"] = _moduleTitleController.text;
           }
+          map["from"] = _channelController.text;
           final uri =
               Uri(scheme: "waireadstoner", host: "rank", queryParameters: map);
           json = uri.toString();
         }
         break;
       case 5:
-        final uri = Uri(scheme: "waireadstoner", host: "personal");
+        final uri = Uri(scheme: "waireadstoner", host: "personal", queryParameters: {"from": _channelController.text});
         json = uri.toString();
         break;
       case 6:
-        final uri = Uri(scheme: "waireadstoner", host: "shelf");
+        final uri = Uri(scheme: "waireadstoner", host: "shelf", queryParameters: {"from": _channelController.text});
         json = uri.toString();
         break;
       case 7:
-        final uri = Uri(scheme: "waireadstoner", host: "store");
+        final uri = Uri(scheme: "waireadstoner", host: "store", queryParameters: {"from": _channelController.text});
         json = uri.toString();
         break;
       case 8:
-        final uri = Uri(scheme: "waireadstoner", host: "customer");
+        final uri = Uri(scheme: "waireadstoner", host: "customer", queryParameters: {"from": _channelController.text});
         json = uri.toString();
         break;
       default:

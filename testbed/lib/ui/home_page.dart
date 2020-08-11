@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testbed/ui/about_page.dart';
 import 'package:testbed/ui/appsflyer_page.dart';
+import 'package:testbed/ui/facebook_page.dart';
+import 'package:testbed/ui/google_page.dart';
 import 'package:testbed/ui/home_dialog_ad_page.dart';
 import 'package:testbed/ui/home_float_ad_page.dart';
 import 'package:testbed/ui/launch_ad_page.dart';
@@ -56,6 +58,20 @@ class HomePage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => AppsflyerPage()));
+            },
+          ),
+          ListTile(
+            title: Text("Facebook深度链接"),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => FacebookPage()));
+            },
+          ),
+          ListTile(
+            title: Text("Google深度链接"),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => GoogleS2sPage()));
             },
           ),
           ListTile(

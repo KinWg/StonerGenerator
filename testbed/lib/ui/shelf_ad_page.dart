@@ -440,10 +440,6 @@ class _ShelfAdState extends State<ShelfAdPage> {
           showTip(context, "书本ID不能为空");
           return;
         }
-        if (_bookNameController.text?.isNotEmpty != true) {
-          showTip(context, "书名不能为空");
-          return;
-        }
 
         ad.cmd = StonerCommand(
             stoner: NavModuleParam(
