@@ -14,68 +14,68 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("运营JSON生成器"),
+        title: Text('运营JSON生成器'),
       ),
       body: Container(
         child: ListView(children: <Widget>[
           ListTile(
-            title: Text("首页弹窗广告"),
+            title: Text('首页弹窗广告'),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (ctx) => HomeDialogAdPage()));
             },
           ),
           ListTile(
-            title: Text("首页浮窗广告"),
+            title: Text('首页浮窗广告'),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (ctx) => HomeFloatAdPage()));
             },
           ),
           ListTile(
-            title: Text("开屏广告"),
+            title: Text('开屏广告'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => LaunchAdPage()));
             },
           ),
           ListTile(
-            title: Text("阅读器浮窗广告"),
+            title: Text('阅读器和VIP书本悬浮广告'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => ReaderAdPage()));
             },
           ),
           ListTile(
-            title: Text("书架广告"),
+            title: Text('书架广告'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => ShelfAdPage()));
             },
           ),
           ListTile(
-            title: Text("Appsflyer深度链接"),
+            title: Text('Appsflyer深度链接'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => AppsflyerPage()));
             },
           ),
           ListTile(
-            title: Text("Facebook深度链接"),
+            title: Text('Facebook深度链接'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => FacebookPage()));
             },
           ),
           ListTile(
-            title: Text("Google深度链接"),
+            title: Text('Google深度链接'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => GoogleS2sPage()));
             },
           ),
           ListTile(
-            title: Text("帮助和关于"),
+            title: Text('帮助和关于'),
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => AboutPage()));

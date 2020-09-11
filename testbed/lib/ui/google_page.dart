@@ -8,7 +8,7 @@ class GoogleS2sPage extends StatefulWidget {
 }
 
 class _GoogleS2sPageState extends State<GoogleS2sPage> {
-  String json = "";
+  String json = '';
 
   final _channelController = TextEditingController();
   final _suffixController = TextEditingController();
@@ -20,7 +20,7 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Google深度链接"),
+        title: Text('Google深度链接'),
         actions: [
           Builder(
             builder: (context) => InkWell(
@@ -29,7 +29,7 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
                 },
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text("生成")),
+                  child: Center(child: Text('生成')),
                 )),
           ),
         ],
@@ -51,12 +51,12 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
                       )),
                       FlatButton(
                         child: Text(
-                          "复制",
+                          '复制',
                           style: TextStyle(fontSize: 12.0),
                         ),
                         onPressed: () async {
                           await Clipboard.setData(
-                              ClipboardData(text: json.replaceAll("\\", "")));
+                              ClipboardData(text: json.replaceAll('\\', '')));
                         },
                       )
                     ],
@@ -64,29 +64,29 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
               TextField(
                 controller: _suffixController,
                 decoration: InputDecoration(
-                  hintText: "可选, 别写中文",
-                  labelText: "前缀，可选",
+                  hintText: '可选, 别写中文',
+                  labelText: '前缀，可选',
                 ),
               ),
               TextField(
                 controller: _channelController,
                 decoration: InputDecoration(
-                  hintText: "必填, 别写中文",
-                  labelText: "渠道",
+                  hintText: '必填, 别写中文',
+                  labelText: '渠道',
                 ),
               ),
               TextField(
                 controller: _bookIdController,
                 decoration: InputDecoration(
-                  hintText: "ID",
-                  labelText: "书本ID",
+                  hintText: 'ID',
+                  labelText: '书本ID',
                 ),
               ),
               TextField(
                 controller: _chapterIdxController,
                 decoration: InputDecoration(
-                  hintText: "从1开始，可选",
-                  labelText: "第几章，可选",
+                  hintText: '从1开始，可选',
+                  labelText: '第几章，可选',
                 ),
               ),
             ],
@@ -96,21 +96,21 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
 
   void _generate(BuildContext context) {
     if (_channelController.text?.isNotEmpty != true) {
-      showTip(context, "渠道不能为空");
+      showTip(context, '渠道不能为空');
       return;
     }
     if (_bookIdController.text?.isNotEmpty != true) {
-      showTip(context, "书本ID不能为空");
+      showTip(context, '书本ID不能为空');
       return;
     }
 
-    var adid = "${_suffixController.text}@p";
-    adid += "@b_${_bookIdController.text}";
+    var adid = '${_suffixController.text}@p';
+    adid += '@b_${_bookIdController.text}';
     if (_chapterIdxController.text?.isNotEmpty == true) {
-      adid += "@c_${_chapterIdxController.text}";
+      adid += '@c_${_chapterIdxController.text}';
     }
-    adid += "@cn_${_channelController.text}";
-    adid += "@";
+    adid += '@cn_${_channelController.text}';
+    adid += '@';
     json = adid;
 
     setState(() {});

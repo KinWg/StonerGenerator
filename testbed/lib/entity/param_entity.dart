@@ -5,8 +5,9 @@ class NavModuleParam {
   String route;
   String web;
   NavBookParam book;
+  NavActivityParam activity;
 
-  NavModuleParam({this.page, this.route, this.web, this.book});
+  NavModuleParam({this.page, this.route, this.web, this.book, this.activity});
 
   bool isValid() {
     if (route?.isNotEmpty == true) {
@@ -29,14 +30,20 @@ class NavModuleParam {
       return true;
     }
 
+    if (activity?.id?.isNotEmpty == true) {
+      return true;
+    }
+
     return false;
   }
 
   NavModuleParam.fromJson(Map<String, dynamic> json) {
-    page = json['page'] != null ? new NavPageParam.fromJson(json['page']) : null;
+    page =
+        json['page'] != null ? new NavPageParam.fromJson(json['page']) : null;
     route = json['route'];
-    web = json["web"];
-    book = json["book"] != null ? NavBookParam.fromJson(json["book"]) : null;
+    web = json['web'];
+    book = json['book'] != null ? NavBookParam.fromJson(json['book']) : null;
+    activity = json['activity'] != null ? NavActivityParam.fromJson(json['activity']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -48,22 +55,30 @@ class NavModuleParam {
       data['route'] = this.route;
     }
     if (web?.isNotEmpty == true) {
-      data["web"] = this.web;
+      data['web'] = this.web;
     }
     if (book != null) {
-      data["book"] = book.toJson();
+      data['book'] = book.toJson();
+    }
+    if (activity != null) {
+      data['activity'] = activity.toJson();
     }
     return data;
   }
 
   String toRawJson() => json.encode(toJson());
+
   NavModuleParam.fromRawJson(String jsonStr) {
     final jsonMap = json.decode(jsonStr);
 
-    page = jsonMap['page'] != null ? new NavPageParam.fromJson(jsonMap['page']) : null;
+    page = jsonMap['page'] != null
+        ? new NavPageParam.fromJson(jsonMap['page'])
+        : null;
     route = jsonMap['route'];
-    web = jsonMap["web"];
-    book = jsonMap["book"] != null ? NavBookParam.fromJson(jsonMap["book"]) : null;
+    web = jsonMap['web'];
+    book =
+        jsonMap['book'] != null ? NavBookParam.fromJson(jsonMap['book']) : null;
+    activity = jsonMap['activity'] != null ? NavActivityParam.fromJson(jsonMap['activity']) : null;
   }
 }
 
@@ -123,21 +138,40 @@ class NavBookParam {
   String bookName;
   int jumpReader;
 
-  NavBookParam({
-    this.bookId, this.bookName, this.jumpReader
-});
+  NavBookParam({this.bookId, this.bookName, this.jumpReader});
 
   factory NavBookParam.fromJson(Map<String, dynamic> json) => NavBookParam(
-    bookId: json["bookId"],
-    bookName: json["bookName"],
-    jumpReader: json["jumpReader"] ?? 0,
-  );
+        bookId: json['bookId'],
+        bookName: json['bookName'],
+        jumpReader: json['jumpReader'] ?? 0,
+      );
 
   Map<String, dynamic> toJson() => {
-    "bookId": bookId,
-    "bookName": bookName,
-    "jumpReader": jumpReader,
-  };
+        'bookId': bookId,
+        'bookName': bookName,
+        'jumpReader': jumpReader,
+      };
+}
+
+class NavActivityParam {
+  String id;
+  String name;
+
+  NavActivityParam({
+    this.id,
+    this.name,
+  });
+
+  factory NavActivityParam.fromJson(Map<String, dynamic> json) =>
+      NavActivityParam(
+        id: json['id'],
+        name: json['name'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+      };
 }
 
 class StonerCommand {
@@ -146,8 +180,9 @@ class StonerCommand {
   StonerCommand({this.stoner});
 
   StonerCommand.fromJson(Map<String, dynamic> json) {
-    stoner =
-    json['stoner'] != null ? new NavModuleParam.fromJson(json['stoner']) : null;
+    stoner = json['stoner'] != null
+        ? new NavModuleParam.fromJson(json['stoner'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
