@@ -22,7 +22,7 @@ class _LaunchAdState extends State<LaunchAdPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('开屏广告'),
         actions: [
           Builder(
             builder: (context) => InkWell(
@@ -82,6 +82,7 @@ class _LaunchAdState extends State<LaunchAdPage>
               buildImageUrlInput(),
               buildStartTime(),
               buildEndTime(),
+              buildWeightInput(),
               Text('跳转设置'),
               SizedBox(
                 height: 6,
@@ -116,64 +117,12 @@ class _LaunchAdState extends State<LaunchAdPage>
       ..imgUrl = urlController.text
       ..startTime = startTime.millisecondsSinceEpoch ~/ 1000
       ..endTime = endTime.millisecondsSinceEpoch ~/ 1000
-      ..weight = int.parse(weightController.text ?? 0)
-      ..payCount = int.parse(payCountController.text ?? 0);
+      ..weight = int.parse(weightController.text ?? 0);
 
-    switch (groupValue) {
-      case 0:
-        if (bookIdController.text?.isNotEmpty != true) {
-          showTip(context, '书本ID不能为空');
-          return;
-        }
-
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                book: NavBookParam(
-                    bookId: bookIdController.text,
-                    bookName: bookNameController.text,
-                    jumpReader: bookJumpValue)));
-        break;
-      case 1:
-        if (jumpUrlController.text?.isNotEmpty != true) {
-          showTip(context, '跳转URL不能为空');
-          return;
-        }
-        ad.cmd =
-            StonerCommand(stoner: NavModuleParam(web: jumpUrlController.text));
-        break;
-      case 2:
-        ad.cmd = StonerCommand(stoner: NavModuleParam(route: 'revenue'));
-        break;
-      case 4:
-        if (moduleIdController.text?.isNotEmpty != true) {
-          showTip(context, '模块ID不能为空');
-          return;
-        }
-        if (moduleTitleController.text?.isNotEmpty != true) {
-          showTip(context, '模块标题不能为空');
-          return;
-        }
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                page: NavPageParam(
-                    title: moduleTitleController.text,
-                    module: int.parse(moduleIdController.text))));
-        break;
-      case 5:
-        if (activityIdController.text?.isNotEmpty != true) {
-          showTip(context, '活动聚合页ID不能为空');
-          return;
-        }
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-              activity: NavActivityParam(id: activityIdController.text,
-                  name: activityTitleController.text ?? ''),
-            )
-        );
-        break;
-      default:
-        break;
-    }
+    buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
+      showTip(context, msg);
+      return;
+    });
 
     ads.add(ad.toJson());
     if (cleanData) {
@@ -194,7 +143,6 @@ class LaunchAd {
   int startTime;
   int endTime;
   int weight;
-  int payCount;
 
   Map toJson() {
     final map = {
@@ -204,7 +152,6 @@ class LaunchAd {
       'startTime': startTime,
       'endTime': endTime,
       'weight': weight,
-      'payCount': payCount,
     };
     return map;
   }

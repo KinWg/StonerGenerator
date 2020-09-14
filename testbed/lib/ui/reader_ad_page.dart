@@ -32,7 +32,7 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
                 },
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text("保存当前广告")),
+                  child: Center(child: Text('保存当前广告')),
                 )),
           ),
           Builder(
@@ -42,7 +42,7 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
                 },
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text("生成")),
+                  child: Center(child: Text('生成')),
                 )),
           )
         ],
@@ -53,7 +53,7 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
             children: [
               Container(
                 height: 30,
-                child: Text("当前广告数量: ${ads.length}"),
+                child: Text('当前广告数量: ${ads.length}'),
               ),
               Container(
                   height: 50,
@@ -69,13 +69,13 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
                       Builder(
                           builder: (context) => FlatButton(
                               child: Text(
-                                "复制",
+                                '复制',
                                 style: TextStyle(fontSize: 12.0),
                               ),
                               onPressed: () async {
                                 await Clipboard.setData(ClipboardData(
-                                    text: json.replaceAll("\\", "")));
-                                showTip(context, "已复制");
+                                    text: json.replaceAll('\\', '')));
+                                showTip(context, '已复制');
                               }))
                     ],
                   )),
@@ -109,20 +109,20 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
     setState(() {
       json = dialogAds.toJson();
     });
-    showTip(context, "JSON已生成");
+    showTip(context, 'JSON已生成');
   }
 
   void _save(BuildContext context, [bool cleanData = true]) {
     if (idController.text?.isNotEmpty != true) {
-      showTip(context, "ID不能为空");
+      showTip(context, 'ID不能为空');
       return;
     }
     if (urlController.text?.isNotEmpty != true) {
-      showTip(context, "图片URL不能为空");
+      showTip(context, '图片URL不能为空');
       return;
     }
     if (_chapterIdxController.text?.isNotEmpty != true) {
-      showTip(context, "章节顺序不能为空");
+      showTip(context, '章节顺序不能为空');
       return;
     }
 
@@ -136,61 +136,10 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
       ..weight = int.parse(weightController.text ?? 0)
       ..payCount = int.parse(payCountController.text ?? 0);
 
-    switch (groupValue) {
-      case 0:
-        if (bookIdController.text?.isNotEmpty != true) {
-          showTip(context, "书本ID不能为空");
-          return;
-        }
-
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                book: NavBookParam(
-                    bookId: bookIdController.text,
-                    bookName: bookNameController.text,
-                    jumpReader: bookJumpValue)));
-        break;
-      case 1:
-        if (jumpUrlController.text?.isNotEmpty != true) {
-          showTip(context, "跳转URL不能为空");
-          return;
-        }
-        ad.cmd =
-            StonerCommand(stoner: NavModuleParam(web: jumpUrlController.text));
-        break;
-      case 2:
-        ad.cmd = StonerCommand(stoner: NavModuleParam(route: "revenue"));
-        break;
-      case 4:
-        if (moduleIdController.text?.isNotEmpty != true) {
-          showTip(context, "模块ID不能为空");
-          return;
-        }
-        if (moduleTitleController.text?.isNotEmpty != true) {
-          showTip(context, "模块标题不能为空");
-          return;
-        }
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                page: NavPageParam(
-                    title: moduleTitleController.text,
-                    module: int.parse(moduleIdController.text))));
-        break;
-      case 5:
-        if (activityIdController.text?.isNotEmpty != true) {
-          showTip(context, '活动聚合页ID不能为空');
-          return;
-        }
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-              activity: NavActivityParam(id: activityIdController.text,
-                  name: activityTitleController.text ?? ''),
-            )
-        );
-        break;
-      default:
-        break;
-    }
+    buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
+      showTip(context, msg);
+      return;
+    });
 
     ads.add(ad.toJson());
     if (cleanData) {
@@ -201,7 +150,7 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
 
     setState(() {});
 
-    showTip(context, "已添加");
+    showTip(context, '已添加');
   }
 }
 
@@ -218,15 +167,15 @@ class ReaderFloatAd {
 
   Map toJson() {
     final map = {
-      "id": id,
-      "cmd": cmd.toJson(),
-      "imgUrl": imgUrl,
-      "startTime": startTime,
-      "endTime": endTime,
-      "login": login,
-      "chapterIdx": chapterIdx,
-      "weight": weight,
-      "payCount": payCount,
+      'id': id,
+      'cmd': cmd.toJson(),
+      'imgUrl': imgUrl,
+      'startTime': startTime,
+      'endTime': endTime,
+      'login': login,
+      'chapterIdx': chapterIdx,
+      'weight': weight,
+      'payCount': payCount,
     };
     return map;
   }
@@ -237,7 +186,7 @@ class ReaderFloatAdList {
 
   String toJson() {
     final map = {
-      "ads": ads,
+      'ads': ads,
     };
     return json.encode(map);
   }

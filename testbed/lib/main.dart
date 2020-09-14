@@ -32,8 +32,8 @@ void main() {
   window_size.getWindowInfo().then((window) {
     if (window.screen != null) {
       final screenFrame = window.screen.visibleFrame;
-      final width = math.max((screenFrame.width / 2).roundToDouble(), 800.0);
-      final height = math.max((screenFrame.height / 2).roundToDouble(), 600.0);
+      final width = math.max((screenFrame.width / 2).roundToDouble(), 1200.0);
+      final height = math.max((screenFrame.height / 2).roundToDouble(), 800.0);
       final left = ((screenFrame.width - width) / 2).roundToDouble();
       final top = ((screenFrame.height - height) / 3).roundToDouble();
       final frame = Rect.fromLTWH(left, top, width, height);
@@ -188,7 +188,7 @@ class _AppState extends State<MyApp> {
       ),
       darkTheme: ThemeData.dark(),
       home: HomePage(),
-      locale: Locale("zh", "CN"),
+      locale: Locale('zh', 'CN'),
     );
   }
 }

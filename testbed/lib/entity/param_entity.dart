@@ -6,8 +6,15 @@ class NavModuleParam {
   String web;
   NavBookParam book;
   NavActivityParam activity;
+  String lineUri;
 
-  NavModuleParam({this.page, this.route, this.web, this.book, this.activity});
+  NavModuleParam(
+      {this.page,
+      this.route,
+      this.web,
+      this.book,
+      this.activity,
+      this.lineUri});
 
   bool isValid() {
     if (route?.isNotEmpty == true) {
@@ -34,6 +41,10 @@ class NavModuleParam {
       return true;
     }
 
+    if (lineUri?.isNotEmpty == true) {
+      return true;
+    }
+
     return false;
   }
 
@@ -43,7 +54,10 @@ class NavModuleParam {
     route = json['route'];
     web = json['web'];
     book = json['book'] != null ? NavBookParam.fromJson(json['book']) : null;
-    activity = json['activity'] != null ? NavActivityParam.fromJson(json['activity']) : null;
+    activity = json['activity'] != null
+        ? NavActivityParam.fromJson(json['activity'])
+        : null;
+    lineUri = json['line'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +77,9 @@ class NavModuleParam {
     if (activity != null) {
       data['activity'] = activity.toJson();
     }
+    if (lineUri != null) {
+      data['line'] = lineUri;
+    }
     return data;
   }
 
@@ -78,7 +95,9 @@ class NavModuleParam {
     web = jsonMap['web'];
     book =
         jsonMap['book'] != null ? NavBookParam.fromJson(jsonMap['book']) : null;
-    activity = jsonMap['activity'] != null ? NavActivityParam.fromJson(jsonMap['activity']) : null;
+    activity = jsonMap['activity'] != null
+        ? NavActivityParam.fromJson(jsonMap['activity'])
+        : null;
   }
 }
 

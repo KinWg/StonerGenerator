@@ -175,49 +175,10 @@ class _ShelfAdState extends State<ShelfAdPage> with CommonWidgetBuilderMixin, Na
       ..isNew = _isNewValue
       ..login = loginValue == 0;
 
-    switch (groupValue) {
-      case 0:
-        if (bookIdController.text?.isNotEmpty != true) {
-          showTip(context, '书本ID不能为空');
-          return;
-        }
-
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                book: NavBookParam(
-                    bookId: bookIdController.text,
-                    bookName: bookNameController.text,
-                    jumpReader: bookJumpValue)));
-        break;
-      case 1:
-        if (jumpUrlController.text?.isNotEmpty != true) {
-          showTip(context, '跳转URL不能为空');
-          return;
-        }
-        ad.cmd =
-            StonerCommand(stoner: NavModuleParam(web: jumpUrlController.text));
-        break;
-      case 2:
-        ad.cmd = StonerCommand(stoner: NavModuleParam(route: 'revenue'));
-        break;
-      case 4:
-        if (moduleIdController.text?.isNotEmpty != true) {
-          showTip(context, '模块ID不能为空');
-          return;
-        }
-        if (moduleTitleController.text?.isNotEmpty != true) {
-          showTip(context, '模块标题不能为空');
-          return;
-        }
-        ad.cmd = StonerCommand(
-            stoner: NavModuleParam(
-                page: NavPageParam(
-                    title: moduleTitleController.text,
-                    module: int.parse(moduleIdController.text))));
-        break;
-      default:
-        break;
-    }
+    buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
+      showTip(context, msg);
+      return;
+    });
 
     ads.add(ad.toJson());
     if (cleanData) {
