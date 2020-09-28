@@ -19,7 +19,9 @@ import 'package:flutter/services.dart';
 
 import 'package:menubar/menubar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testbed/home_page/new_home_page.dart';
 import 'package:testbed/ui/home_page.dart';
+import 'package:testbed/utils/ui_utils.dart';
 import 'package:window_size/window_size.dart' as window_size;
 
 // The shared_preferences key for the testbed's color.
@@ -32,8 +34,8 @@ void main() {
   window_size.getWindowInfo().then((window) {
     if (window.screen != null) {
       final screenFrame = window.screen.visibleFrame;
-      final width = math.max((screenFrame.width / 2).roundToDouble(), 1200.0);
-      final height = math.max((screenFrame.height / 2).roundToDouble(), 800.0);
+      final width = math.max((screenFrame.width / 3 * 2).roundToDouble(), 1200.0);
+      final height = math.max((screenFrame.width / 3).roundToDouble(), 800.0);
       final left = ((screenFrame.width - width) / 2).roundToDouble();
       final top = ((screenFrame.height - height) / 3).roundToDouble();
       final frame = Rect.fromLTWH(left, top, width, height);
@@ -41,9 +43,12 @@ void main() {
       window_size
           .setWindowTitle('运营Json生成器');
 
+      UIUtils.windowWidth = width;
+      UIUtils.windowHeight = height;
+
       if (Platform.isMacOS) {
         window_size.setWindowMinSize(Size(800, 600));
-        window_size.setWindowMaxSize(Size(1600, 1200));
+        window_size.setWindowMaxSize(Size(1600, 1000));
       }
     }
   });
@@ -71,7 +76,7 @@ class _AppState extends State<MyApp> {
     }
   }
 
-  Color _primaryColor = Colors.blue;
+  Color _primaryColor = Colors.blueGrey.shade400;
   int _counter = 0;
 
   static _AppState of(BuildContext context) =>
@@ -179,15 +184,16 @@ class _AppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: '运营JSON生成器',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: _primaryColor,
-        accentColor: _primaryColor,
+        primarySwatch: Colors.indigo,
+        primaryColor: Colors.indigo.shade300,
+        accentColor: Colors.indigo.shade100,
         // Specify a font to reduce potential issues with the
         // application behaving differently on different platforms.
         fontFamily: 'Roboto',
+        toggleableActiveColor: Colors.indigo.shade300
       ),
       darkTheme: ThemeData.dark(),
-      home: HomePage(),
+      home: HomePage2(),
       locale: Locale('zh', 'CN'),
     );
   }

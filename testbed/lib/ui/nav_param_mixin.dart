@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testbed/entity/param_entity.dart';
+import 'package:testbed/utils/ui_utils.dart';
 
 /// Created by Kin on 2020/9/11
 
@@ -26,26 +27,30 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
   @protected
   var bookJumpValue = 0;
 
+  final _titleStyle = TextStyle(
+      color: Colors.black87, fontSize: 16.0, fontWeight: FontWeight.bold);
+  final _hintStyle = TextStyle(color: Colors.grey, fontSize: 16.0);
+  final _textStyle = TextStyle(color: Colors.indigo.shade400, fontSize: 18.0);
+
   Widget buildJumpRadio() {
     return Container(
-      height: 100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: _getRadios(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: _getRadios2(),
-          ),
-        ],
-      )
-    );
+        height: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _getRadios(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _getRadios2(),
+            ),
+          ],
+        ));
   }
 
   List<Widget> _getRadios() {
@@ -59,7 +64,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳书本', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳书本', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 1,
@@ -69,7 +74,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳网页', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳网页', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 2,
@@ -79,7 +84,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳充值', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳充值', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 3,
@@ -89,7 +94,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳分类', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳分类', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 4,
@@ -99,7 +104,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳排行榜', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳排行榜', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 5,
@@ -109,7 +114,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳活动聚合页', style: TextStyle(fontSize: 12.0)))
+      ..add(Text('跳活动聚合页', style: _titleStyle))
       ..add(Radio<int>(
         groupValue: groupValue,
         value: 6,
@@ -119,7 +124,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳Line页面', style: TextStyle(fontSize: 12.0)));
+      ..add(Text('跳Line页面', style: _titleStyle));
     return list;
   }
 
@@ -134,7 +139,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           });
         },
       ))
-      ..add(Text('跳VIP页面', style: TextStyle(fontSize: 12.0)));
+      ..add(Text('跳VIP页面', style: _titleStyle));
     return list;
   }
 
@@ -145,27 +150,15 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: bookIdController,
-              decoration: InputDecoration(
-                hintText: 'ID',
-                labelText: '书本ID',
-              ),
-            ),
-            TextField(
-              controller: bookNameController,
-              decoration: InputDecoration(
-                hintText: '名称',
-                labelText: '书本名称',
-              ),
-            ),
+            _buildInput('书本ID', 'ID', bookIdController),
+            _buildInput('书本名称', '名称', bookNameController),
             Container(
                 height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('直接跳转到阅读器', style: TextStyle(fontSize: 12.0)),
+                    Text('直接跳转到阅读器', style: _titleStyle),
                     SizedBox(
                       width: 10,
                     ),
@@ -183,7 +176,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
                     ),
                     Text(
                       '是',
-                      style: TextStyle(fontSize: 12),
+                      style: _titleStyle,
                     ),
                     SizedBox(
                       width: 20,
@@ -202,7 +195,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
                     ),
                     Text(
                       '否',
-                      style: TextStyle(fontSize: 12),
+                      style: _titleStyle,
                     ),
                   ],
                 )),
@@ -211,89 +204,40 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
   }
 
   Widget _buildUrlWidget() {
-    return Container(
-        height: 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: jumpUrlController,
-              decoration: InputDecoration(
-                hintText: 'URL',
-                labelText: '跳转页面',
-              ),
-            ),
-          ],
-        ));
+    return _buildInput('跳转页面', 'URL', jumpUrlController);
   }
 
   Widget _buildModuleWidget() {
     return Container(
-        height: 125,
+        height: 110,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: moduleTitleController,
-              decoration: InputDecoration(
-                hintText: '标题',
-                labelText: '模块标题',
-              ),
-            ),
-            TextField(
-              controller: moduleIdController,
-              decoration: InputDecoration(
-                hintText: 'ID',
-                labelText: '模块ID',
-              ),
-            ),
+            _buildInput('模块ID', 'ID', moduleIdController),
+            _buildInput('模块标题', '标题', moduleTitleController),
           ],
         ));
   }
 
   Widget _buildActivityWidget() {
     return Container(
-        height: 125,
+        height: 110,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: activityTitleController,
-              decoration: InputDecoration(
-                hintText: '标题',
-                labelText: '聚合页标题',
-              ),
-            ),
-            TextField(
-              controller: activityIdController,
-              decoration: InputDecoration(
-                hintText: 'ID',
-                labelText: '聚合页ID',
-              ),
-            ),
+            _buildInput('聚合页ID', 'ID', activityIdController),
+            _buildInput('聚合页标题', '标题', activityTitleController),
           ],
         ));
   }
 
   Widget _buildLineWidget() {
-    return Container(
-        height: 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: lineUrlController,
-              decoration: InputDecoration(
-                hintText: 'URL',
-                labelText: 'Line地址，非短连接（如：https://line.me/R/ti/p/%40820oardu或line://ti/p/%40820oardu）',
-              ),
-            ),
-          ],
-        ));
+    return _buildInput(
+        'Line地址',
+        'URL，非短连接（如：https://line.me/R/ti/p/%40820oardu或line://ti/p/%40820oardu）',
+        lineUrlController);
   }
 
   @protected
@@ -401,5 +345,33 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
         break;
     }
     succeedCallback?.call(cmd);
+  }
+
+  Widget _buildInput(
+      String title, String hint, TextEditingController controller) {
+    return Container(
+      width: UIUtils.windowWidth - 332,
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: _titleStyle,
+          ),
+          SizedBox(
+            width: 16.0,
+          ),
+          Expanded(
+              child: TextField(
+            controller: controller,
+            decoration: InputDecoration.collapsed(
+                hintText: hint, hintStyle: _hintStyle),
+            style: _textStyle,
+          ))
+        ],
+      ),
+    );
   }
 }

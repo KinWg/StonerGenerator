@@ -1,74 +1,69 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:testbed/entity/param_entity.dart';
 import 'package:testbed/ui/common_widget_builder_mixin.dart';
 import 'package:testbed/ui/nav_param_mixin.dart';
 import 'package:testbed/ui/toast.dart';
+import 'package:testbed/utils/ui_utils.dart';
 
 class HomeDialogAdPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomeDialogAdState();
 }
 
-class _HomeDialogAdState extends State<HomeDialogAdPage> with NavParamMixin, CommonWidgetBuilderMixin {
-  List<Map> ads = List();
+class _HomeDialogAdState extends State<HomeDialogAdPage>
+    with NavParamMixin, CommonWidgetBuilderMixin {
+  List<Map> ads = [];
 
   String json = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('首页弹窗广告'),
-        actions: [
-          Builder(
-            builder: (context) => InkWell(
-                onTap: () {
-                  _save(context);
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('保存当前广告')),
-                )),
-          ),
-          Builder(
-            builder: (context) => InkWell(
-                onTap: () {
-                  _generate(context);
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('生成')),
-                )),
-          )
-        ],
-      ),
+      backgroundColor: Colors.white,
       body: Container(
-          padding: EdgeInsets.all(16.0),
-          child: ListView(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: ListView(
+            padding: EdgeInsets.all(16.0),
             children: [
               Container(
                 height: 30,
-                child: Text('当前广告数量: ${ads.length}'),
+                child: Text(
+                  '当前广告数量: ${ads.length}',
+                  style: titleStyle,
+                ),
               ),
               Container(
-                  height: 50,
+                  height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 16.0),
+                        child: Text(
+                          'Json:',
+                          style: titleStyle,
+                        ),
+                      ),
                       Expanded(
                           child: Text(
                         json,
-                        style: TextStyle(fontSize: 12.0),
+                        style: TextStyle(
+                            fontSize: 12.0, color: Colors.indigo.shade300),
                       )),
                       Builder(
                           builder: (context) => FlatButton(
                               child: Text(
                                 '复制',
-                                style: TextStyle(fontSize: 12.0),
+                                style: textStyle,
                               ),
                               onPressed: () async {
                                 await Clipboard.setData(ClipboardData(
@@ -77,6 +72,7 @@ class _HomeDialogAdState extends State<HomeDialogAdPage> with NavParamMixin, Com
                               }))
                     ],
                   )),
+              buildLine(),
               buildIdInput(),
               buildImageUrlInput(),
               buildStartTime(),
@@ -84,7 +80,11 @@ class _HomeDialogAdState extends State<HomeDialogAdPage> with NavParamMixin, Com
               buildLoginInput(),
               buildWeightInput(),
               buildPayCountInput(),
-              Text('跳转设置'),
+              buildLine(),
+              Text(
+                '跳转设置',
+                style: titleStyle,
+              ),
               SizedBox(
                 height: 6,
               ),
@@ -92,6 +92,50 @@ class _HomeDialogAdState extends State<HomeDialogAdPage> with NavParamMixin, Com
               buildJumpWidget()
             ],
           )),
+          Material(
+            color: Colors.indigo.shade50,
+            elevation: 4.0,
+            child: Container(
+              width: UIUtils.windowWidth - 30,
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Builder(
+                    builder: (context) => InkWell(
+                        onTap: () {
+                          _save(context);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Text(
+                            '保存当前广告',
+                            style: TextStyle(color: Colors.indigo.shade500),
+                          )),
+                        )),
+                  ),
+                  Builder(
+                    builder: (context) => InkWell(
+                        onTap: () {
+                          _generate(context);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Text(
+                            '生成',
+                            style: TextStyle(color: Colors.indigo.shade500),
+                          )),
+                        )),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      )),
     );
   }
 
@@ -161,10 +205,18 @@ class DialogAd {
     };
     return map;
   }
+
+  @override
+  String toString() {
+    return '广告ID: $id, 图片URL: $imgUrl, '
+    '开始时间: ${DateTime.fromMillisecondsSinceEpoch(startTime).toIso8601String()} '
+    '结束时间: ${DateTime.fromMillisecondsSinceEpoch(endTime).toIso8601String()} '
+    '登录后显示: $login 优先级: $weight 付费次数: $payCount 跳转命令: ${cmd.toJson()}';
+  }
 }
 
 class DialogAdList {
-  List<Map> ads = List();
+  List<Map> ads = [];
 
   String toJson() {
     final map = {
