@@ -28,12 +28,23 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
 
   Widget buildJumpRadio() {
     return Container(
-      height: 50,
-      child: Row(
+      height: 100,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: _getRadios(),
-      ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _getRadios(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _getRadios2(),
+          ),
+        ],
+      )
     );
   }
 
@@ -109,6 +120,21 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
         },
       ))
       ..add(Text('跳Line页面', style: TextStyle(fontSize: 12.0)));
+    return list;
+  }
+
+  List<Widget> _getRadios2() {
+    final list = <Widget>[]
+      ..add(Radio<int>(
+        groupValue: groupValue,
+        value: 7,
+        onChanged: (value) {
+          setState(() {
+            groupValue = value;
+          });
+        },
+      ))
+      ..add(Text('跳VIP页面', style: TextStyle(fontSize: 12.0)));
     return list;
   }
 
@@ -235,14 +261,14 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              controller: moduleTitleController,
+              controller: activityTitleController,
               decoration: InputDecoration(
                 hintText: '标题',
                 labelText: '聚合页标题',
               ),
             ),
             TextField(
-              controller: moduleIdController,
+              controller: activityIdController,
               decoration: InputDecoration(
                 hintText: 'ID',
                 labelText: '聚合页ID',
@@ -367,6 +393,9 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
             stoner: NavModuleParam(
                 lineUri: lineUrlController.text
                     .replaceFirst('https://line.me/R/', 'line://')));
+        break;
+      case 7:
+        cmd = StonerCommand(stoner: NavModuleParam(route: 'vipPage'));
         break;
       default:
         break;

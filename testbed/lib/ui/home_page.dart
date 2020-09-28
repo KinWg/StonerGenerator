@@ -8,6 +8,7 @@ import 'package:testbed/ui/home_float_ad_page.dart';
 import 'package:testbed/ui/launch_ad_page.dart';
 import 'package:testbed/ui/reader_ad_page.dart';
 import 'package:testbed/ui/shelf_ad_page.dart';
+import 'package:testbed/ui/stoner_nav_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -72,6 +73,13 @@ class HomePage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (ctx) => GoogleS2sPage()));
+            },
+          ),
+          ListTile(
+            title: Text('配置后台自定义跳转链接'),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => StonerNavPage()));
             },
           ),
           ListTile(
