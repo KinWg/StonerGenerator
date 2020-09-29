@@ -18,6 +18,7 @@ class AboutPage extends StatelessWidget {
             Text('V 0.0.2 增加数据检查，更新Appsflyer跳转命令格式'),
             Text('V 0.0.3 增加Facebook和Google的跳转命令'),
             Text('V 0.0.4 广告增加权重和付费次数限制，增加跳转活动页参数，增加跳Line配置'),
+            Text('V 0.0.5 增加跳转命令，更换更适合桌面端的UI'),
             SizedBox(height: 20),
             Text('Ver 0.0.4'),
             Text('Written by Kin'),
