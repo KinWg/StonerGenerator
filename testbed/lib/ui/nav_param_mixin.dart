@@ -299,6 +299,9 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
       case 2:
         cmd = StonerCommand(stoner: NavModuleParam(route: 'revenue'));
         break;
+      case 3:
+        cmd = StonerCommand(stoner: NavModuleParam(route: 'path/store/typepage'));
+        break;
       case 4:
         if (moduleIdController.text?.isNotEmpty != true) {
           failCallback?.call('模块ID不能为空');

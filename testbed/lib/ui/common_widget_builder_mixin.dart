@@ -25,7 +25,7 @@ mixin CommonWidgetBuilderMixin<T extends StatefulWidget> on State<T> {
 
   @protected
   Widget buildIdInput() {
-    return _buildInput(
+    return buildInput(
         '广告ID',
         '须唯一，建议使用年月日序号来构造，如2020091101',
         idController);
@@ -33,7 +33,7 @@ mixin CommonWidgetBuilderMixin<T extends StatefulWidget> on State<T> {
 
   @protected
   Widget buildImageUrlInput() {
-    return _buildInput(
+    return buildInput(
         '图片URL',
         '广告图片的URL，须带上https://前缀',
         urlController);
@@ -192,14 +192,14 @@ mixin CommonWidgetBuilderMixin<T extends StatefulWidget> on State<T> {
   }
 
   Widget buildWeightInput() {
-    return _buildInput('优先级', '数字越大优先级越高', weightController);
+    return buildInput('优先级', '数字越大优先级越高', weightController);
   }
 
   Widget buildPayCountInput() {
-    return _buildInput('充值次数', '大于等于此次数才会显示', payCountController);
+    return buildInput('充值次数', '大于等于此次数才会显示', payCountController);
   }
 
-  Widget _buildInput(
+  Widget buildInput(
       String title, String hint, TextEditingController controller) {
     return Container(
       width: UIUtils.windowWidth - 332,

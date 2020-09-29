@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testbed/utils/ui_utils.dart';
 
 /// Created by Kin on 2020/9/11
 
@@ -17,6 +18,11 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
   final moduleIdController = TextEditingController();
   @protected
   final chapterIdxController = TextEditingController();
+
+  final _titleStyle = TextStyle(
+      color: Colors.black87, fontSize: 16.0, fontWeight: FontWeight.bold);
+  final _hintStyle = TextStyle(color: Colors.grey, fontSize: 16.0);
+  final _textStyle = TextStyle(color: Colors.indigo.shade400, fontSize: 18.0);
 
   @protected
   Widget buildJumpRadio() {
@@ -42,7 +48,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳书本', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳书本', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 1,
@@ -52,7 +58,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳网页', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳网页', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 2,
@@ -62,7 +68,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳充值', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳充值', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 4,
@@ -72,7 +78,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳排行榜', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳排行榜', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 5,
@@ -82,7 +88,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳个人页', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳个人页', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 6,
@@ -92,7 +98,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳书架', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳书架', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 7,
@@ -102,7 +108,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳首页', style: TextStyle(fontSize: 12.0)))
+    ..add(Text('跳首页', style: _titleStyle))
     ..add(Radio<int>(
       groupValue: groupValue,
       value: 8,
@@ -112,7 +118,7 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         });
       },
     ))
-    ..add(Text('跳客服', style: TextStyle(fontSize: 12.0)));
+    ..add(Text('跳客服', style: _titleStyle));
     return list;
   }
 
@@ -137,47 +143,15 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: bookIdController,
-              decoration: InputDecoration(
-                hintText: 'ID',
-                labelText: '书本ID',
-              ),
-            ),
-            TextField(
-              controller: bookNameController,
-              decoration: InputDecoration(
-                hintText: '名称，非必填',
-                labelText: '书本名称',
-              ),
-            ),
-            TextField(
-              controller: chapterIdxController,
-              decoration: InputDecoration(
-                hintText: '从1开始',
-                labelText: '第几章',
-              ),
-            ),
+            _buildInput('书本ID', 'ID', bookIdController),
+            _buildInput('书本名称', '名称，非必填', bookNameController),
+            _buildInput('第几章', '从1开始', chapterIdxController)
           ],
         ));
   }
 
   Widget _buildUrlWidget() {
-    return Container(
-        height: 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: jumpUrlController,
-              decoration: InputDecoration(
-                hintText: 'URL',
-                labelText: '跳转页面',
-              ),
-            ),
-          ],
-        ));
+    return _buildInput('跳转页面', 'URL', jumpUrlController);
   }
 
   Widget _buildModuleWidget() {
@@ -187,21 +161,37 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: moduleTitleController,
-              decoration: InputDecoration(
-                hintText: '标题',
-                labelText: '模块标题',
-              ),
-            ),
-            TextField(
-              controller: moduleIdController,
-              decoration: InputDecoration(
-                hintText: 'ID',
-                labelText: '模块ID',
-              ),
-            ),
+            _buildInput('模块ID', 'ID', moduleIdController),
+            _buildInput('模块标题', '标题', moduleTitleController),
           ],
         ));
+  }
+
+  Widget _buildInput(
+      String title, String hint, TextEditingController controller) {
+    return Container(
+      width: UIUtils.windowWidth - 332,
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: _titleStyle,
+          ),
+          SizedBox(
+            width: 16.0,
+          ),
+          Expanded(
+              child: TextField(
+                controller: controller,
+                decoration: InputDecoration.collapsed(
+                    hintText: hint, hintStyle: _hintStyle),
+                style: _textStyle,
+              ))
+        ],
+      ),
+    );
   }
 }

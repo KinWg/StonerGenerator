@@ -20,7 +20,6 @@ import 'package:flutter/services.dart';
 import 'package:menubar/menubar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testbed/home_page/new_home_page.dart';
-import 'package:testbed/ui/home_page.dart';
 import 'package:testbed/utils/ui_utils.dart';
 import 'package:window_size/window_size.dart' as window_size;
 

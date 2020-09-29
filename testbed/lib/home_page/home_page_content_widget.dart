@@ -42,7 +42,9 @@ class _HomePageContentState extends State<HomePageContentWidget> {
   Widget build(BuildContext context) {
     return Material(
       elevation: 0.0,
+      color: Colors.white,
       child: Container(
+        color: Colors.white,
         width: (UIUtils.windowWidth ?? 300) - 300,
         height: UIUtils.windowHeight,
         child: _buildChild(),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:testbed/ui/common_widget_builder_mixin.dart';
 import 'package:testbed/ui/toast.dart';
+import 'package:testbed/utils/ui_utils.dart';
 
 class GoogleS2sPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _GoogleS2sPageState();
 }
 
-class _GoogleS2sPageState extends State<GoogleS2sPage> {
+class _GoogleS2sPageState extends State<GoogleS2sPage> with CommonWidgetBuilderMixin {
   String json = '';
 
   final _channelController = TextEditingController();
@@ -19,78 +21,84 @@ class _GoogleS2sPageState extends State<GoogleS2sPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Google深度链接'),
-        actions: [
-          Builder(
-            builder: (context) => InkWell(
-                onTap: () {
-                  _generate(context);
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text('生成')),
-                )),
-          ),
-        ],
-      ),
-      body: Container(
-          padding: EdgeInsets.all(16.0),
-          child: ListView(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child:
+          ListView(
+            padding: EdgeInsets.all(16.0),
             children: [
               Container(
-                  height: 50,
+                  height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 16.0),
+                        child: Text(
+                          '广告标题:',
+                          style: titleStyle,
+                        ),
+                      ),
                       Expanded(
                           child: Text(
-                        json,
-                        style: TextStyle(fontSize: 12.0),
-                      )),
-                      FlatButton(
-                        child: Text(
-                          '复制',
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                        onPressed: () async {
-                          await Clipboard.setData(
-                              ClipboardData(text: json.replaceAll('\\', '')));
-                        },
-                      )
+                            json,
+                            style: TextStyle(
+                                fontSize: 12.0, color: Colors.indigo.shade300),
+                          )),
+                      Builder(
+                          builder: (context) => FlatButton(
+                              child: Text(
+                                '复制',
+                                style: textStyle,
+                              ),
+                              onPressed: () async {
+                                await Clipboard.setData(ClipboardData(
+                                    text: json.replaceAll('\\', '')));
+                                showTip(context, '已复制');
+                              }))
                     ],
                   )),
-              TextField(
-                controller: _suffixController,
-                decoration: InputDecoration(
-                  hintText: '可选, 别写中文',
-                  labelText: '前缀，可选',
-                ),
-              ),
-              TextField(
-                controller: _channelController,
-                decoration: InputDecoration(
-                  hintText: '必填, 别写中文',
-                  labelText: '渠道',
-                ),
-              ),
-              TextField(
-                controller: _bookIdController,
-                decoration: InputDecoration(
-                  hintText: 'ID',
-                  labelText: '书本ID',
-                ),
-              ),
-              TextField(
-                controller: _chapterIdxController,
-                decoration: InputDecoration(
-                  hintText: '从1开始，可选',
-                  labelText: '第几章，可选',
-                ),
-              ),
+              buildLine(),
+              buildInput('前缀，可选', '可选, 别写中文', _suffixController),
+              buildInput('渠道', '必填, 别写中文', _channelController),
+              buildInput('书本ID', 'ID', _bookIdController),
+              buildInput('第几章，可选', '从1开始，可选', _chapterIdxController),
             ],
           )),
+          Material(
+            color: Colors.indigo.shade50,
+            elevation: 4.0,
+            child: Container(
+              width: UIUtils.windowWidth - 30,
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Builder(
+                    builder: (context) => InkWell(
+                        onTap: () {
+                          _generate(context);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Text(
+                                '生成',
+                                style: TextStyle(color: Colors.indigo.shade500),
+                              )),
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

@@ -23,6 +23,7 @@ class _HomePageListState extends State<HomePageListWidget> {
       color: Colors.white,
       child: Container(
         width: 300,
+        color: Colors.white,
         height: UIUtils.windowHeight,
         child: ListTileTheme(
           selectedTileColor: Colors.indigo.shade100,

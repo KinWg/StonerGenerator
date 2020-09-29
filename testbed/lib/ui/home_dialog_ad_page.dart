@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:testbed/entity/param_entity.dart';
+import 'package:testbed/ui/ad_preview_widget.dart';
 import 'package:testbed/ui/common_widget_builder_mixin.dart';
 import 'package:testbed/ui/nav_param_mixin.dart';
 import 'package:testbed/ui/toast.dart';
@@ -16,13 +17,16 @@ class HomeDialogAdPage extends StatefulWidget {
 
 class _HomeDialogAdState extends State<HomeDialogAdPage>
     with NavParamMixin, CommonWidgetBuilderMixin {
-  List<Map> ads = [];
+  final _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: 'HomeDialog');
+
+  List<DialogAd> ads = [];
 
   String json = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: Container(
           child: Column(
@@ -102,6 +106,21 @@ class _HomeDialogAdState extends State<HomeDialogAdPage>
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Builder(builder: (context) => InkWell(
+                      onTap: () {
+                        showModalBottomSheet(context: context,
+                                builder: (context) => AdPreviewWidget(ads, (index) {
+                              setState(() {});
+                            }), backgroundColor: Colors.white, elevation: 8.0);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                            child: Text(
+                              '查看已配置广告',
+                              style: TextStyle(color: Colors.indigo.shade500),
+                            )),
+                      ))),
                   Builder(
                     builder: (context) => InkWell(
                         onTap: () {
@@ -129,7 +148,7 @@ class _HomeDialogAdState extends State<HomeDialogAdPage>
                             style: TextStyle(color: Colors.indigo.shade500),
                           )),
                         )),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -140,7 +159,7 @@ class _HomeDialogAdState extends State<HomeDialogAdPage>
   }
 
   void _generate(BuildContext context) {
-    final dialogAds = DialogAdList()..ads = ads;
+    final dialogAds = DialogAdList()..ads = ads.map((e) => e.toJson()).toList();
     setState(() {
       json = dialogAds.toJson();
     });
@@ -163,15 +182,21 @@ class _HomeDialogAdState extends State<HomeDialogAdPage>
       ..startTime = startTime.millisecondsSinceEpoch ~/ 1000
       ..endTime = endTime.millisecondsSinceEpoch ~/ 1000
       ..login = loginValue == 0
-      ..weight = int.parse(weightController.text ?? 0)
-      ..payCount = int.parse(payCountController.text ?? 0);
+      ..weight = int.parse(weightController.text ?? '0')
+      ..payCount = int.parse(payCountController.text ?? '0');
 
+    var error = false;
     buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
       showTip(context, msg);
+      error = true;
       return;
     });
 
-    ads.add(ad.toJson());
+    if (error) {
+      return;
+    }
+
+    ads.add(ad);
     if (cleanData) {
       clearCommonData();
       clearJumpData();
@@ -209,9 +234,9 @@ class DialogAd {
   @override
   String toString() {
     return '广告ID: $id, 图片URL: $imgUrl, '
-    '开始时间: ${DateTime.fromMillisecondsSinceEpoch(startTime).toIso8601String()} '
-    '结束时间: ${DateTime.fromMillisecondsSinceEpoch(endTime).toIso8601String()} '
-    '登录后显示: $login 优先级: $weight 付费次数: $payCount 跳转命令: ${cmd.toJson()}';
+        '开始时间: ${DateTime.fromMillisecondsSinceEpoch(startTime).toIso8601String()} '
+        '结束时间: ${DateTime.fromMillisecondsSinceEpoch(endTime).toIso8601String()} '
+        '登录后显示: $login 优先级: $weight 付费次数: $payCount 跳转命令: ${cmd?.toJson()}';
   }
 }
 

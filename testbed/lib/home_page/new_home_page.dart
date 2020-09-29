@@ -24,6 +24,7 @@ class _HomePage2State extends State<HomePage2> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
+        color: Colors.white,
         width: UIUtils.windowWidth,
         height: UIUtils.windowHeight,
         child: Row(
