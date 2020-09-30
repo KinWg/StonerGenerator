@@ -191,7 +191,6 @@ class _AppState extends State<MyApp> {
         fontFamily: 'Roboto',
         toggleableActiveColor: Colors.indigo.shade300
       ),
-      darkTheme: ThemeData.dark(),
       home: HomePage2(),
       locale: Locale('zh', 'CN'),
     );
