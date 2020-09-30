@@ -25,19 +25,23 @@ class _AdPreviewState extends State<AdPreviewWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: (UIUtils.windowHeight / 2).floorToDouble(),
-      height: 300,
+      height: (UIUtils.windowHeight / 3 * 2).floorToDouble(),
+      // height: 300,
       color: Colors.white,
       child: ListView.builder(itemBuilder: (context, index) {
         return Container(
+          padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.indigo.shade500)),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(child: Text(ads[index].toString(),
                 style: TextStyle(fontSize: 14.0, color: Colors.black87),)),
               IconButton(icon: Container(padding: EdgeInsets.all(5.0),
-                child: Icon(Icons.close),), onPressed: () {
+                child: Icon(Icons.delete),), onPressed: () {
                 setState(() {
                   ads.removeAt(index);
                 });

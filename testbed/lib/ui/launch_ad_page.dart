@@ -168,7 +168,7 @@ class _LaunchAdState extends State<LaunchAdPage>
       ..imgUrl = urlController.text
       ..startTime = startTime.millisecondsSinceEpoch ~/ 1000
       ..endTime = endTime.millisecondsSinceEpoch ~/ 1000
-      ..weight = int.parse(weightController.text ?? 0);
+      ..weight = int.parse(weightController.text ?? '0');
 
     var error = false;
     buildNavCommand((cmd) => ad.cmd = cmd, (msg) {

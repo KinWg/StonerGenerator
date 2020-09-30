@@ -254,6 +254,7 @@ class _HomeFloatAdState extends State<HomeFloatAdPage>
     setState(() {
       json = dialogAds.toJson();
     });
+    showTip(context, 'JSON已生成');
   }
 
   void _save(BuildContext context, [bool cleanData = true]) {
@@ -273,8 +274,8 @@ class _HomeFloatAdState extends State<HomeFloatAdPage>
       ..endTime = endTime.millisecondsSinceEpoch ~/ 1000
       ..position = _posValue
       ..login = loginValue == 0
-      ..weight = int.parse(weightController.text ?? 0)
-      ..payCount = int.parse(payCountController.text ?? 0);
+      ..weight = int.parse(weightController.text ?? '0')
+      ..payCount = int.parse(payCountController.text ?? '0');
 
     var error = false;
     buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
@@ -294,6 +295,8 @@ class _HomeFloatAdState extends State<HomeFloatAdPage>
     }
 
     setState(() {});
+
+    showTip(context, '已添加');
   }
 }
 
@@ -333,7 +336,7 @@ class HomeFloatAd {
 }
 
 class HomeFloatList {
-  List<Map> ads = List();
+  List<Map> ads = [];
 
   String toJson() {
     final map = {

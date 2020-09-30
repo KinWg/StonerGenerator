@@ -179,8 +179,8 @@ class _ReaderAdState extends State<ReaderAdPage> with NavParamMixin, CommonWidge
       ..endTime = endTime.millisecondsSinceEpoch ~/ 1000
       ..chapterIdx = int.parse(_chapterIdxController.text ?? 1)
       ..login = loginValue == 0
-      ..weight = int.parse(weightController.text ?? 0)
-      ..payCount = int.parse(payCountController.text ?? 0);
+      ..weight = int.parse(weightController.text ?? '0')
+      ..payCount = int.parse(payCountController.text ?? '0');
 
     var error = false;
     buildNavCommand((cmd) => ad.cmd = cmd, (msg) {
