@@ -175,7 +175,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
                       width: 5,
                     ),
                     Text(
-                      '是',
+                      '否',
                       style: _titleStyle,
                     ),
                     SizedBox(
@@ -194,7 +194,7 @@ mixin NavParamMixin<T extends StatefulWidget> on State<T> {
                       width: 5,
                     ),
                     Text(
-                      '否',
+                      '是',
                       style: _titleStyle,
                     ),
                   ],
