@@ -122,13 +122,13 @@ class _FacebookPageState extends State<FacebookPage> with DeepLinkJumpMixin, Com
         map['from'] = _channelController.text;
 
         final uri =
-            Uri(scheme: 'waireadstoner', host: 'book', queryParameters: map);
+            Uri(scheme: 'sofanovel', host: 'book', queryParameters: map);
         json = uri.toString();
         break;
       case 1:
         if (jumpUrlController.text?.isNotEmpty == true) {
           final uri = Uri(
-              scheme: 'waireadstoner',
+              scheme: 'sofanovel',
               host: 'web',
               queryParameters: {
                 'url': jumpUrlController.text,
@@ -139,8 +139,8 @@ class _FacebookPageState extends State<FacebookPage> with DeepLinkJumpMixin, Com
         break;
       case 2:
         final uri = Uri(
-            scheme: 'waireadstoner',
-            host: 'revenue',
+            scheme: 'sofanovel',
+            host: 'recharge',
             queryParameters: {'from': _channelController.text});
         json = uri.toString();
         break;
@@ -152,36 +152,40 @@ class _FacebookPageState extends State<FacebookPage> with DeepLinkJumpMixin, Com
           }
           map['from'] = _channelController.text;
           final uri =
-              Uri(scheme: 'waireadstoner', host: 'rank', queryParameters: map);
+              Uri(scheme: 'sofanovel', host: 'rank', queryParameters: map);
           json = uri.toString();
         }
         break;
       case 5:
         final uri = Uri(
-            scheme: 'waireadstoner',
+            scheme: 'sofanovel',
             host: 'personal',
             queryParameters: {'from': _channelController.text});
         json = uri.toString();
         break;
       case 6:
         final uri = Uri(
-            scheme: 'waireadstoner',
+            scheme: 'sofanovel',
             host: 'shelf',
             queryParameters: {'from': _channelController.text});
         json = uri.toString();
         break;
       case 7:
         final uri = Uri(
-            scheme: 'waireadstoner',
+            scheme: 'sofanovel',
             host: 'store',
             queryParameters: {'from': _channelController.text});
         json = uri.toString();
         break;
       case 8:
         final uri = Uri(
-            scheme: 'waireadstoner',
+            scheme: 'sofanovel',
             host: 'customer',
             queryParameters: {'from': _channelController.text});
+        json = uri.toString();
+        break;
+      case 9:
+        final uri = Uri(scheme: 'sofanovel', host: 'book_detail', queryParameters: {'bookId': bookDetailIdController.text, 'from': _channelController.text});
         json = uri.toString();
         break;
       default:

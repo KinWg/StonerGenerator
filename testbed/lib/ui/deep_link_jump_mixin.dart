@@ -18,6 +18,8 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
   final moduleIdController = TextEditingController();
   @protected
   final chapterIdxController = TextEditingController();
+  @protected
+  final bookDetailIdController = TextEditingController();
 
   final _titleStyle = TextStyle(
       color: Colors.black87, fontSize: 16.0, fontWeight: FontWeight.bold);
@@ -69,56 +71,66 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
       },
     ))
     ..add(Text('跳充值', style: _titleStyle))
-    ..add(Radio<int>(
-      groupValue: groupValue,
-      value: 4,
-      onChanged: (value) {
-        setState(() {
-          groupValue = value;
-        });
-      },
-    ))
-    ..add(Text('跳排行榜', style: _titleStyle))
-    ..add(Radio<int>(
-      groupValue: groupValue,
-      value: 5,
-      onChanged: (value) {
-        setState(() {
-          groupValue = value;
-        });
-      },
-    ))
-    ..add(Text('跳个人页', style: _titleStyle))
-    ..add(Radio<int>(
-      groupValue: groupValue,
-      value: 6,
-      onChanged: (value) {
-        setState(() {
-          groupValue = value;
-        });
-      },
-    ))
-    ..add(Text('跳书架', style: _titleStyle))
-    ..add(Radio<int>(
-      groupValue: groupValue,
-      value: 7,
-      onChanged: (value) {
-        setState(() {
-          groupValue = value;
-        });
-      },
-    ))
-    ..add(Text('跳首页', style: _titleStyle))
-    ..add(Radio<int>(
-      groupValue: groupValue,
-      value: 8,
-      onChanged: (value) {
-        setState(() {
-          groupValue = value;
-        });
-      },
-    ))
-    ..add(Text('跳客服', style: _titleStyle));
+      ..add(Radio<int>(
+        groupValue: groupValue,
+        value: 9,
+        onChanged: (value) {
+          setState(() {
+            groupValue = value;
+          });
+        },
+      ))
+      ..add(Text('跳详情页', style: _titleStyle));
+    // ..add(Radio<int>(
+    //   groupValue: groupValue,
+    //   value: 4,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       groupValue = value;
+    //     });
+    //   },
+    // ))
+    // ..add(Text('跳排行榜', style: _titleStyle))
+    // ..add(Radio<int>(
+    //   groupValue: groupValue,
+    //   value: 5,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       groupValue = value;
+    //     });
+    //   },
+    // ))
+    // ..add(Text('跳个人页', style: _titleStyle))
+    // ..add(Radio<int>(
+    //   groupValue: groupValue,
+    //   value: 6,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       groupValue = value;
+    //     });
+    //   },
+    // ))
+    // ..add(Text('跳书架', style: _titleStyle))
+    // ..add(Radio<int>(
+    //   groupValue: groupValue,
+    //   value: 7,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       groupValue = value;
+    //     });
+    //   },
+    // ))
+    // ..add(Text('跳首页', style: _titleStyle))
+    // ..add(Radio<int>(
+    //   groupValue: groupValue,
+    //   value: 8,
+    //   onChanged: (value) {
+    //     setState(() {
+    //       groupValue = value;
+    //     });
+    //   },
+    // ))
+    // ..add(Text('跳客服', style: _titleStyle));
     return list;
   }
 
@@ -131,6 +143,8 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
         return _buildUrlWidget();
       case 4:
         return _buildModuleWidget();
+      case 9:
+        return _buildBookDetailWidget();
       default:
         return Container();
     }
@@ -146,6 +160,18 @@ mixin DeepLinkJumpMixin<T extends StatefulWidget> on State<T> {
             _buildInput('书本ID', 'ID', bookIdController),
             _buildInput('书本名称', '名称，非必填', bookNameController),
             _buildInput('第几章', '从1开始', chapterIdxController)
+          ],
+        ));
+  }
+
+  Widget _buildBookDetailWidget() {
+    return Container(
+        height: 185,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInput('书本ID', 'ID', bookDetailIdController),
           ],
         ));
   }

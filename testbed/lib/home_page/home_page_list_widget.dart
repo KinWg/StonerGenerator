@@ -37,48 +37,48 @@ class _HomePageListState extends State<HomePageListWidget> {
 
   List<ListTile> _buildTiles() {
     return [
-      ListTile(
-        title: Text('首页弹窗广告'),
-        selected: _currentIndex == 0,
-        onTap: () {
-          _changeIndex(0);
-        },
-      ),
-      ListTile(
-        title: Text('首页浮窗广告'),
-        selected: _currentIndex == 1,
-        onTap: () {
-          _changeIndex(1);
-        },
-      ),
-      ListTile(
-        title: Text('开屏广告'),
-        selected: _currentIndex == 2,
-        onTap: () {
-          _changeIndex(2);
-        },
-      ),
-      ListTile(
-        title: Text('阅读器和VIP书本悬浮广告'),
-        selected: _currentIndex == 3,
-        onTap: () {
-          _changeIndex(3);
-        },
-      ),
-      ListTile(
-        title: Text('书架广告'),
-        selected: _currentIndex == 4,
-        onTap: () {
-          _changeIndex(4);
-        },
-      ),
-      ListTile(
-        title: Text('Appsflyer深度链接'),
-        selected: _currentIndex == 5,
-        onTap: () {
-          _changeIndex(5);
-        },
-      ),
+      // ListTile(
+      //   title: Text('首页弹窗广告'),
+      //   selected: _currentIndex == 0,
+      //   onTap: () {
+      //     _changeIndex(0);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('首页浮窗广告'),
+      //   selected: _currentIndex == 1,
+      //   onTap: () {
+      //     _changeIndex(1);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('开屏广告'),
+      //   selected: _currentIndex == 2,
+      //   onTap: () {
+      //     _changeIndex(2);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('阅读器和VIP书本悬浮广告'),
+      //   selected: _currentIndex == 3,
+      //   onTap: () {
+      //     _changeIndex(3);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('书架广告'),
+      //   selected: _currentIndex == 4,
+      //   onTap: () {
+      //     _changeIndex(4);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('Appsflyer深度链接'),
+      //   selected: _currentIndex == 5,
+      //   onTap: () {
+      //     _changeIndex(5);
+      //   },
+      // ),
       ListTile(
         title: Text('Facebook深度链接'),
         selected: _currentIndex == 6,
@@ -86,20 +86,20 @@ class _HomePageListState extends State<HomePageListWidget> {
           _changeIndex(6);
         },
       ),
-      ListTile(
-        title: Text('Google深度链接'),
-        selected: _currentIndex == 7,
-        onTap: () {
-          _changeIndex(7);
-        },
-      ),
-      ListTile(
-        title: Text('配置后台自定义跳转链接'),
-        selected: _currentIndex == 8,
-        onTap: () {
-          _changeIndex(8);
-        },
-      ),
+      // ListTile(
+      //   title: Text('Google深度链接'),
+      //   selected: _currentIndex == 7,
+      //   onTap: () {
+      //     _changeIndex(7);
+      //   },
+      // ),
+      // ListTile(
+      //   title: Text('配置后台自定义跳转链接'),
+      //   selected: _currentIndex == 8,
+      //   onTap: () {
+      //     _changeIndex(8);
+      //   },
+      // ),
       ListTile(
         title: Text('帮助和关于'),
         selected: _currentIndex == 9,
